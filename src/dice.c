@@ -14,6 +14,7 @@ void comb(int n, int m, int X){
 	for(i = 0; i < n; i++) dices[i] = 1; 
 	dices[n] = 0; // a posicao n eh usada para verificar se todas combinacoes ja foram feitas
 	while(dices[n] == 0){
+		if(sum(dices, n) == X) cont++;
 		if(dices[0] < m) dices[0]++;
 		else {
 			dices[0] = 1;
@@ -21,17 +22,24 @@ void comb(int n, int m, int X){
 			dices[j]++;
 			while(dices[j] > m){
 				dices[j] = 1;
+				dices[j+1]++;
 				j++;
 			}
 		}
-		if(sum(dices, n) == X) cont++;
 	}
 	printf("Há %d modos de se obter %d lancando %d dados com %d lados", cont, X, n, m);
+	free(dices);
 	return;
 }
 
 int main(){
-	int n=4, m=10, X=25;
+	int n, m, X;
+	printf("digite o numero de dados\n>");
+	scanf("%d", &n);
+	printf("digite o numero de faces dos dados\n>");
+	scanf("%d", &m);
+	printf("digite o numero que deseja obter\n>");
+	scanf("%d", &X);
 	comb(n,m,X);
 	return(0);
 }
